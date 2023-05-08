@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Imagenes/img_pacman_01.png</file>
+        <file>Imagenes/background_level1_pacman.jpg</file>
+        <file>Imagenes/background_level1_pacman (1).jpg</file>
+    </qresource>
+</RCC>
