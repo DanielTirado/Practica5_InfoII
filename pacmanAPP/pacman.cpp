@@ -48,3 +48,8 @@ void pacman::moverR()
     posx = posx+velocidad;
     setPos(posx, posy);
 }
+
+void pacman::choque()
+{
+    velocidad = -velocidad/1.3;
+}

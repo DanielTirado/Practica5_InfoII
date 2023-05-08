@@ -53,7 +53,7 @@ private:
 
     void keyPressEvent(QKeyEvent *evento);
     void DrawTablero(string fuenteFile);
-
+    bool Colision();
 };
 
 #endif // MAINWINDOW_H

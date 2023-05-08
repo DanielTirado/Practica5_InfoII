@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     miEscena = new QGraphicsScene(0,0,420,466);
     ui->graphicsView->setScene(miEscena);
 
-    personaje = new pacman(100,100,15);
+    personaje = new pacman(100,172,13);
     miEscena->addItem(personaje);
 
     score = 0;
@@ -48,14 +48,30 @@ MainWindow::~MainWindow()
 
 void MainWindow::animar()
 {
-    if(moverIz)
-        personaje->moverL();
-    if(moverDe)
-        personaje->moverR();
-    if(moverAr)
-        personaje->moverU();
-    if(moverAb)
-        personaje->moverD();
+    if(moverIz){
+        if (Colision()){
+            moverIz = false;
+        }
+        else personaje->moverL();
+    }
+    if(moverDe){
+        if (Colision()){
+            moverDe = false;
+        }
+        else personaje->moverR();
+    }
+    if(moverAr){
+        if (Colision()){
+            moverAr = false;
+        }
+        else personaje->moverU();
+    }
+    if(moverAb){
+        if (Colision()){
+            moverAb = false;
+        }
+        else personaje->moverD();
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
@@ -121,6 +137,17 @@ void MainWindow::DrawTablero(string fuenteFile)
         miEscena->addItem(Paredes.back());
     }
     tablero.close();
+}
+
+bool MainWindow::Colision()
+{
+    QList<QGraphicsRectItem*>::Iterator it;
+    for (it=Paredes.begin(); it!=Paredes.end(); it++){
+        if(personaje->collidesWithItem(*it)){
+            return true;
+        }
+    }
+    return false;
 }
 
 void MainWindow::aumentarScore()
