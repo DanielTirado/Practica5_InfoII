@@ -9,7 +9,7 @@ pacman::pacman(int x, int y, int r)
     this->posx=x;
     this->posy=y;
     this->radio=r;
-    velocidad=3;
+    velocidad=1;
     setPos(posx, posy);
 }
 
@@ -23,6 +23,9 @@ void pacman::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     QPixmap pixmap;
     pixmap.load(":/Imagenes/img_pacman_01");
     painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
+
+    //painter->setBrush(Qt::darkBlue);
+    //painter->drawEllipse(boundingRect());
 }
 
 void pacman::moverU()
@@ -47,9 +50,4 @@ void pacman::moverR()
 {
     posx = posx+velocidad;
     setPos(posx, posy);
-}
-
-void pacman::choque()
-{
-    velocidad = -velocidad/1.3;
 }

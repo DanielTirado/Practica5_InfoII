@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -26,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     moverAr=false;
     moverAb=false;
 
-    ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/Imagenes/background_level1_pacman (1)")));
+    //ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/Imagenes/background_level1_pacman (1)")));
 
     DrawTablero("tablero.txt");
 
@@ -35,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer,SIGNAL(timeout()),this,SLOT(animar()));
     connect(this,SIGNAL(aviso(int)),this,SLOT(aumentarScore()));
 
-    timer->start(50);
+    timer->start(15);
 
 }
 
@@ -50,27 +52,42 @@ void MainWindow::animar()
 {
     if(moverIz){
         if (Colision()){
+            personaje->moverR();
             moverIz = false;
         }
         else personaje->moverL();
     }
     if(moverDe){
         if (Colision()){
+            personaje->moverL();
             moverDe = false;
         }
         else personaje->moverR();
     }
     if(moverAr){
         if (Colision()){
+            personaje->moverD();
             moverAr = false;
         }
         else personaje->moverU();
     }
     if(moverAb){
         if (Colision()){
+            personaje->moverU();
             moverAb = false;
         }
         else personaje->moverD();
+    }
+
+    QList<QGraphicsRectItem*>::Iterator it;
+    for (it=puntos.begin(); it!=puntos.end(); it++){
+        if(personaje->collidesWithItem(*it)){
+
+            if ((*it)->isVisible()){
+                (*it)->hide();
+                emit aviso(9);
+            }
+        }
     }
 }
 
@@ -82,19 +99,19 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         moverDe=false;
         moverAb=false;
     }
-    if(evento->key() == Qt::Key_Z){
+    else if(evento->key() == Qt::Key_S){
         moverAb = true;
         moverIz=false;
         moverDe=false;
         moverAr=false;
     }
-    if(evento->key() == Qt::Key_A){
+    else if(evento->key() == Qt::Key_A){
         moverIz = true;
         moverDe=false;
         moverAr=false;
         moverAb=false;
     }
-    if(evento->key() == Qt::Key_S){
+    else if(evento->key() == Qt::Key_D){
         moverDe = true;
         moverAr=false;
         moverAb=false;
@@ -109,7 +126,8 @@ void MainWindow::DrawTablero(string fuenteFile)
     int _x, _y, _w, _h;
 
     tablero.open(fuenteFile);
-    while (tablero.good()){
+
+    for (int NumL=0; NumL < 51; NumL++){
         getline(tablero,linea);
 
         int pos = 0;
@@ -133,8 +151,30 @@ void MainWindow::DrawTablero(string fuenteFile)
 
         _h = stoi(linea);
 
-        Paredes.push_back(new QGraphicsRectItem(_x,_y,_w,_h));
-        miEscena->addItem(Paredes.back());
+        paredes.push_back(new QGraphicsRectItem(_x,_y,_w,_h));
+        miEscena->addItem(paredes.back());
+    }
+
+    while (tablero.good()){
+        getline(tablero,linea);
+
+        int pos = 0;
+
+        string numero;
+
+        pos = linea.find(":");
+        numero = linea.substr(0, pos);
+        _x = stoi(numero);
+        linea.erase(0, pos + 1);
+
+        pos = linea.find(":");
+        numero = linea.substr(0, pos);
+        _y = stoi(numero);
+        linea.erase(0, pos + 1);
+
+        puntos.push_back(new QGraphicsRectItem(_x,_y, 5, 5));
+        miEscena->addItem(puntos.back());
+
     }
     tablero.close();
 }
@@ -142,7 +182,7 @@ void MainWindow::DrawTablero(string fuenteFile)
 bool MainWindow::Colision()
 {
     QList<QGraphicsRectItem*>::Iterator it;
-    for (it=Paredes.begin(); it!=Paredes.end(); it++){
+    for (it=paredes.begin(); it!=paredes.end(); it++){
         if(personaje->collidesWithItem(*it)){
             return true;
         }

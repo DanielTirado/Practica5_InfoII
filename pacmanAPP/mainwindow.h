@@ -8,6 +8,7 @@
 #include <QKeyEvent>
 #include <string>
 #include <QTimer>
+#include <QPainter>
 #include <iostream>
 
 #include <pacman.h>
@@ -49,11 +50,13 @@ private:
     bool moverAr;
     bool moverAb;
 
-    QList<QGraphicsRectItem*>Paredes;
+    QList<QGraphicsRectItem*>paredes;
+    QList<QGraphicsRectItem*>puntos;
 
     void keyPressEvent(QKeyEvent *evento);
     void DrawTablero(string fuenteFile);
     bool Colision();
+
 };
 
 #endif // MAINWINDOW_H

@@ -17,7 +17,7 @@ public:
     void moverD();
     void moverL();
     void moverR();
-    void choque();
+    void choque(char dir);
     int velocidad;
 };
 

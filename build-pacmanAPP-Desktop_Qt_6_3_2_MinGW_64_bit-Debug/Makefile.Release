@@ -650,6 +650,8 @@ release/mainwindow.o: ../pacmanAPP/mainwindow.cpp ../pacmanAPP/mainwindow.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qscrollarea.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QLCDNumber \
+		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qlcdnumber.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QMenuBar \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qmenubar.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qmenu.h \
