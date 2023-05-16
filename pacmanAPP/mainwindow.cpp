@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     moverAr=false;
     moverAb=false;
 
-    //ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/Imagenes/background_level1_pacman (1)")));
+    ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/Imagenes/background_level1_pacman (1)")));
 
     DrawTablero("tablero.txt");
 
@@ -79,7 +79,7 @@ void MainWindow::animar()
         else personaje->moverD();
     }
 
-    QList<QGraphicsRectItem*>::Iterator it;
+    QList<QGraphicsEllipseItem*>::Iterator it;
     for (it=puntos.begin(); it!=puntos.end(); it++){
         if(personaje->collidesWithItem(*it)){
 
@@ -172,11 +172,15 @@ void MainWindow::DrawTablero(string fuenteFile)
         _y = stoi(numero);
         linea.erase(0, pos + 1);
 
-        puntos.push_back(new QGraphicsRectItem(_x,_y, 5, 5));
+        puntos.push_back(new QGraphicsEllipseItem(_x,_y, 5, 5));
         miEscena->addItem(puntos.back());
 
     }
     tablero.close();
+    QList<QGraphicsEllipseItem*>::Iterator it;
+    for (it=puntos.begin(); it!=puntos.end(); it++){
+        (*it)->setBrush(Qt::yellow);
+    }
 }
 
 bool MainWindow::Colision()

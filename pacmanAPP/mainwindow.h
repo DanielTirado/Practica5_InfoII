@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
 #include <QPainter>
 #include <QKeyEvent>
 #include <string>
@@ -51,7 +52,7 @@ private:
     bool moverAb;
 
     QList<QGraphicsRectItem*>paredes;
-    QList<QGraphicsRectItem*>puntos;
+    QList<QGraphicsEllipseItem*>puntos;
 
     void keyPressEvent(QKeyEvent *evento);
     void DrawTablero(string fuenteFile);
